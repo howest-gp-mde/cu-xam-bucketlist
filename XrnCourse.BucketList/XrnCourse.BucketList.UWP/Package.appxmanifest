@@ -32,11 +32,11 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="XrnCourse.BucketList.UWP.App">
       <uap:VisualElements
-        DisplayName="XrnCourse.BucketList.UWP"
+        DisplayName="Bucket List"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="XrnCourse.BucketList.UWP"
-        BackgroundColor="transparent">
+        BackgroundColor="#44c8f5">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -44,7 +44,7 @@
             <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#44c8f5"/>
       </uap:VisualElements>
     </Application>
   </Applications>
