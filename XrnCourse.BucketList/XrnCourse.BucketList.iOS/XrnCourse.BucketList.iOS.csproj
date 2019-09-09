@@ -130,4 +130,7 @@
       <Name>XrnCourse.BucketList</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bucketlist.png" />
+  </ItemGroup>
 </Project>
