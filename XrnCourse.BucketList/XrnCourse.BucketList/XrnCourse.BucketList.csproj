@@ -13,4 +13,11 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\Services\Api\" />
+    <Folder Include="Domain\Services\Local\" />
+    <Folder Include="Styles\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
 </Project>
