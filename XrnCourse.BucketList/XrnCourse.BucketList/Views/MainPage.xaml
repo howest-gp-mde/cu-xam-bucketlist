@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"  
+             Style="{StaticResource MainLayout}"
+             Title="Bucket Lists"
+             x:Class="XrnCourse.BucketList.Views.MainPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" IconImageSource="add.png" Priority="1" Order="Primary" 
+                     Clicked="BtnAddBucketList_Clicked"></ToolbarItem>
+        <ToolbarItem Text="Settings" IconImageSource="settings.png" Priority="2" Order="Primary" 
+                     Clicked="BtnSettings_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Label>Your Bucket Lists will appear here</Label>
+    </ContentPage.Content>
+</ContentPage>
