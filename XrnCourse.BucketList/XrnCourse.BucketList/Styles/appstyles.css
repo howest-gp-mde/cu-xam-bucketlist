@@ -1,0 +1,13 @@
+﻿^ContentPage {
+    
+}
+
+.listitem {
+    padding: 5 10; /* uses css order: top, right, bottom, left (unlike XAML!) */
+    -xf-orientation: horizontal;
+}
+
+.errormessage {
+    color: #f46842;
+    font-size: 13;
+}
