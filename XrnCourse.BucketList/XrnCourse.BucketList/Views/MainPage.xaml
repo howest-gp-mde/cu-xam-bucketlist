@@ -20,7 +20,17 @@
                       ItemTapped="LvBucketLists_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Title}" />
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="MnuBucketEdit_Clicked" CommandParameter="{Binding .}" Text="Edit" />
+                                <MenuItem Clicked="MnuBucketDelete_Clicked" CommandParameter="{Binding .}" Text="Delete" 
+                                          IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <StackLayout StyleClass="listitem">
+                                <Image Source="bucket_default.png" VerticalOptions="CenterAndExpand" />
+                                <Label Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
