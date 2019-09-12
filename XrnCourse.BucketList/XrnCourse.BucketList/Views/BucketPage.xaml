@@ -10,23 +10,25 @@
         <ToolbarItem Text="Save" IconImageSource="{OnPlatform UWP=ok.png}" Clicked="BtnSave_Clicked"></ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Title" />
-            <Entry x:Name="txtTitle" Placeholder="Enter a title" />
-            <Label Text="Description" />
-            <Entry x:Name="txtDescription" Placeholder="Describe your list here" />
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Is favorite?" 
-                VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
-                <Switch x:Name="swIsFavorite" 
-                VerticalOptions="Center" HorizontalOptions="End" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Percent complete" 
-                VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
-                <Label x:Name="lblPercentComplete" 
-                VerticalOptions="Center" HorizontalOptions="End" />
-            </StackLayout>
-        </StackLayout>
+<StackLayout>
+    <Label Text="Title" />
+    <Entry x:Name="txtTitle" Placeholder="Enter a title" />
+    <Label x:Name="lblErrorTitle" StyleClass="errormessage" />
+    <Label Text="Description" />
+    <Entry x:Name="txtDescription" Placeholder="Describe your list here" />
+    <Label x:Name="lblErrorDescription" StyleClass="errormessage" />
+    <StackLayout Orientation="Horizontal">
+        <Label Text="Is favorite?" 
+    VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+        <Switch x:Name="swIsFavorite" 
+    VerticalOptions="Center" HorizontalOptions="End" />
+    </StackLayout>
+    <StackLayout Orientation="Horizontal">
+        <Label Text="Percent complete" 
+    VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+        <Label x:Name="lblPercentComplete" 
+    VerticalOptions="Center" HorizontalOptions="End" />
+    </StackLayout>
+</StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -51,16 +51,18 @@ namespace XrnCourse.BucketList.Views
         private async void BtnSave_Clicked(object sender, EventArgs e)
         {
             SaveBucketState();
-            if (isNew)
+            if (Validate(currentBucket))
             {
-                currentBucket.Id = Guid.NewGuid(); // generate ID for this bucket
-                await bucketsService.AddBucketList(currentBucket);
+                if (isNew)
+                {
+                    currentBucket.Id = Guid.NewGuid(); // generate ID for this bucket
+                    await bucketsService.AddBucketList(currentBucket);
+                }
+                else
+                {
+                    await bucketsService.UpdateBucketList(currentBucket);
+                }
             }
-            else
-            {
-                await bucketsService.UpdateBucketList(currentBucket);
-            }
-            await DisplayAlert("Saved", $"Your bucket list {currentBucket.Title} has been saved", "Ok");
         }
 
         /// <summary>
@@ -84,5 +86,36 @@ namespace XrnCourse.BucketList.Views
             currentBucket.IsFavorite = swIsFavorite.IsToggled;
             currentBucket.OwnerId = settings.CurrentUserId;
         }
+
+        /// <summary>
+        /// Validates the current values of a bucket object
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <returns></returns>
+        private bool Validate(Bucket bucket)
+        {
+            bool error = false;
+
+            //reset error labels
+            lblErrorTitle.Text = "";
+            lblErrorTitle.IsVisible = false;
+            lblErrorDescription.Text = "";
+            lblErrorDescription.IsVisible = false;
+
+            if (string.IsNullOrWhiteSpace(bucket.Title))
+            {
+                error = true;
+                lblErrorTitle.Text = "Title cannot be empty";
+                lblErrorTitle.IsVisible = true;
+            }
+            if (string.IsNullOrWhiteSpace(bucket.Description))
+            {
+                error = true;
+                lblErrorDescription.Text = "Description cannot be empty";
+                lblErrorDescription.IsVisible = true;
+            }
+            return !error;
+        }
+
     }
 }
