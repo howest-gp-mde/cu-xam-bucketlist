@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using FluentValidation;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
 using XrnCourse.BucketList.Domain.Services.Mocking;
+using XrnCourse.BucketList.Domain.Validators;
 
 namespace XrnCourse.BucketList.Views
 {
@@ -17,16 +14,19 @@ namespace XrnCourse.BucketList.Views
     {
         private readonly IBucketsService bucketsService;
         private readonly IAppSettingsService settingsService;
+        private IValidator bucketValidator;
         private AppSettings settings;
         private Bucket currentBucket;
         private bool isNew = true;
-
+        
         public BucketPage(Bucket bucket)
         {
             InitializeComponent();
 
             settingsService = new MockAppSettingsService();
             bucketsService = new MockBucketsService();
+
+            bucketValidator = new BucketValidator();
 
             if (bucket == null)
             {
@@ -62,6 +62,7 @@ namespace XrnCourse.BucketList.Views
                 {
                     await bucketsService.UpdateBucketList(currentBucket);
                 }
+                await Navigation.PopAsync();
             }
         }
 
@@ -94,27 +95,26 @@ namespace XrnCourse.BucketList.Views
         /// <returns></returns>
         private bool Validate(Bucket bucket)
         {
-            bool error = false;
-
-            //reset error labels
-            lblErrorTitle.Text = "";
-            lblErrorTitle.IsVisible = false;
-            lblErrorDescription.Text = "";
             lblErrorDescription.IsVisible = false;
+            lblErrorTitle.IsVisible = false;
 
-            if (string.IsNullOrWhiteSpace(bucket.Title))
+            var validationContext = new ValidationContext<Bucket>(bucket);
+            var validationResult = bucketValidator.Validate(validationContext);
+            //loop through error to identify properties
+            foreach (var error in validationResult.Errors)
             {
-                error = true;
-                lblErrorTitle.Text = "Title cannot be empty";
-                lblErrorTitle.IsVisible = true;
+                if (error.PropertyName == nameof(bucket.Title))
+                {
+                    lblErrorTitle.Text = error.ErrorMessage;
+                    lblErrorTitle.IsVisible = true;
+                }
+                if (error.PropertyName == nameof(bucket.Description))
+                {
+                    lblErrorDescription.Text = error.ErrorMessage;
+                    lblErrorDescription.IsVisible = true;
+                }
             }
-            if (string.IsNullOrWhiteSpace(bucket.Description))
-            {
-                error = true;
-                lblErrorDescription.Text = "Description cannot be empty";
-                lblErrorDescription.IsVisible = true;
-            }
-            return !error;
+            return validationResult.IsValid;
         }
 
     }
