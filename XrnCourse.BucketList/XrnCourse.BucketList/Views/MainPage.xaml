@@ -14,6 +14,16 @@
                      Clicked="BtnSettings_Clicked"></ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <Label>Your Bucket Lists will appear here</Label>
+        <StackLayout>
+            <ListView x:Name="lvBucketLists"
+                    HasUnevenRows="False" RowHeight="60"
+                      ItemTapped="LvBucketLists_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Title}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
