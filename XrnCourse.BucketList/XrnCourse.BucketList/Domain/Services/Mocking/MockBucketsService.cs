@@ -49,12 +49,16 @@ namespace XrnCourse.BucketList.Domain.Services.Mocking
 
         public async Task<Bucket> AddBucketList(Bucket bucket)
         {
+            await Task.Delay(Constants.Mocking.FakeDelay);
+
             bucketLists.Add(bucket);
             return await Task.FromResult(bucket); //ensures async result
         }
 
         public async Task<Bucket> UpdateBucketList(Bucket bucket)
         {
+            await Task.Delay(Constants.Mocking.FakeDelay);
+
             var oldBucketList = bucketLists.FirstOrDefault(e => e.Id == bucket.Id);
             bucketLists.Remove(oldBucketList);
             bucketLists.Add(bucket);
