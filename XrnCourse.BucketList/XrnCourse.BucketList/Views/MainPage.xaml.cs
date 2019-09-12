@@ -1,21 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XrnCourse.BucketList.Domain.Models;
+using XrnCourse.BucketList.Domain.Services;
+using XrnCourse.BucketList.Domain.Services.Mocking;
 
 namespace XrnCourse.BucketList.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
+        private readonly IAppSettingsService settingsService;
+        private readonly IBucketsService bucketsService;
+
         public MainPage()
         {
             InitializeComponent();
+
+            settingsService = new MockAppSettingsService();
+            bucketsService = new MockBucketsService();
         }
+
+        protected async override void OnAppearing()
+        {
+            await RefreshBucketLists();
+            base.OnAppearing();
+        }
+
         private async void BtnSettings_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SettingsPage());
@@ -26,5 +38,25 @@ namespace XrnCourse.BucketList.Views
             await Navigation.PushAsync(new BucketsPage());
         }
 
+        private async void LvBucketLists_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            //get the item on which we received a tap
+            var bucket = e.Item as Bucket;
+            if (bucket != null)
+            {
+                await DisplayAlert("Tap!", $"Congratulations!\nYou tapped {bucket.Title}", "Uh, ok..");
+                await Navigation.PushAsync(new BucketsPage());
+            }
+        }
+
+        private async Task RefreshBucketLists()
+        {
+            //get settings, because we need current user Id
+            var settings = await settingsService.GetSettings();
+            //get all bucket lists for this user
+            var buckets = await bucketsService.GetBucketListsForUser(settings.CurrentUserId);
+            //bind IEnumerable<Bucket> to the ListView's ItemSource
+            lvBucketLists.ItemsSource = buckets;
+        }
     }
 }
