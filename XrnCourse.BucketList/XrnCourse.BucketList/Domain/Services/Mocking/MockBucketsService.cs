@@ -43,6 +43,8 @@ namespace XrnCourse.BucketList.Domain.Services.Mocking
 
         public async Task<IQueryable<Bucket>> GetBucketListsForUser(Guid userid)
         {
+            await Task.Delay(Constants.Mocking.FakeDelay);
+
             var buckets = bucketLists.Where(e => e.OwnerId == userid).AsQueryable();
             return await Task.FromResult(buckets); //ensures async result
         }
