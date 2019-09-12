@@ -50,6 +50,7 @@ namespace XrnCourse.BucketList.Views
 
         private async void BtnSave_Clicked(object sender, EventArgs e)
         {
+            busyIndicator.IsVisible = true;
             SaveBucketState();
             if (Validate(currentBucket))
             {
@@ -64,6 +65,7 @@ namespace XrnCourse.BucketList.Views
                 }
                 await Navigation.PopAsync();
             }
+            busyIndicator.IsVisible = false;
         }
 
         /// <summary>
