@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:XrnCourse.BucketList.Views"
              mc:Ignorable="d"  
              Style="{StaticResource MainLayout}"
              Title="Bucket Lists"
@@ -14,26 +15,30 @@
                      Clicked="BtnSettings_Clicked"></ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <ListView x:Name="lvBucketLists"
+        <AbsoluteLayout AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <StackLayout>
+                <ListView x:Name="lvBucketLists"
                     HasUnevenRows="False" RowHeight="60"
                       ItemTapped="LvBucketLists_ItemTapped">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem Clicked="MnuBucketEdit_Clicked" CommandParameter="{Binding .}" Text="Edit" />
-                                <MenuItem Clicked="MnuBucketDelete_Clicked" CommandParameter="{Binding .}" Text="Delete" 
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Clicked="MnuBucketEdit_Clicked" CommandParameter="{Binding .}" Text="Edit" />
+                                    <MenuItem Clicked="MnuBucketDelete_Clicked" CommandParameter="{Binding .}" Text="Delete" 
                                           IsDestructive="True" />
-                            </ViewCell.ContextActions>
-                            <StackLayout StyleClass="listitem">
-                                <Image Source="bucket_default.png" VerticalOptions="CenterAndExpand" />
-                                <Label Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+                                </ViewCell.ContextActions>
+                                <StackLayout StyleClass="listitem">
+                                    <Image Source="bucket_default.png" VerticalOptions="CenterAndExpand" />
+                                    <Label Text="{Binding Title}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <views:BusyView x:Name="busyIndicator" />
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

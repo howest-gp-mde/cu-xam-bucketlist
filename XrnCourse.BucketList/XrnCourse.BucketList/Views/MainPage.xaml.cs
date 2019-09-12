@@ -63,12 +63,16 @@ namespace XrnCourse.BucketList.Views
 
         private async Task RefreshBucketLists()
         {
+            busyIndicator.IsVisible = true;
+
             //get settings, because we need current user Id
             var settings = await settingsService.GetSettings();
             //get all bucket lists for this user
             var buckets = await bucketsService.GetBucketListsForUser(settings.CurrentUserId);
             //bind IEnumerable<Bucket> to the ListView's ItemSource
             lvBucketLists.ItemsSource = buckets;
+
+            busyIndicator.IsVisible = false;
         }
     }
 }

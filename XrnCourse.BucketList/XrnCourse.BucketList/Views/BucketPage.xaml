@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:XrnCourse.BucketList.Views"
              mc:Ignorable="d"
              Style="{StaticResource MainLayout}"
              x:Class="XrnCourse.BucketList.Views.BucketPage">
@@ -34,20 +35,7 @@
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
-            <StackLayout x:Name="busyIndicator" 
-                    AbsoluteLayout.LayoutFlags="All"
-                    AbsoluteLayout.LayoutBounds="0,0,1,1"
-                    IsVisible="False" BackgroundColor="#CCFFFFFF">
-                <ActivityIndicator IsRunning="True" Color="Accent" 
-                   HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                    <ActivityIndicator.WidthRequest>
-                        <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="iOS, Android">50</On>
-                            <On Platform="UWP">200</On>
-                        </OnPlatform>
-                    </ActivityIndicator.WidthRequest>
-                </ActivityIndicator>
-            </StackLayout>
+            <views:BusyView x:Name="busyIndicator" />
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
