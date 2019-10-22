@@ -23,5 +23,11 @@ namespace XrnCourse.BucketList.Domain.Services
         /// <returns>The updated User instance on success</returns>
         Task<User> UpdateUser(User user);
 
+        /// <summary>
+        /// Creates a new User instance in the data store
+        /// </summary>
+        /// <returns>The new User instance</returns>
+        Task<User> CreateUser(User user);
+
     }
 }

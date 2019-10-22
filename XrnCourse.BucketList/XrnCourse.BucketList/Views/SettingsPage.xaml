@@ -15,7 +15,9 @@
         <TableRoot>
             <TableSection Title="User settings">
                 <EntryCell x:Name="txtUserName" Label="Username" Keyboard="Text" />
+                <TextCell x:Name="errorUserName" TextColor="#f46842" />
                 <EntryCell x:Name="txtEmail" Label="E-mail" Keyboard="Email" />
+                <TextCell x:Name="errorEmail" TextColor="#f46842"  />
             </TableSection>
             <TableSection Title="General settings">
                 <SwitchCell x:Name="swEnableListSharing" Text="Enable List sharing" On="true" />

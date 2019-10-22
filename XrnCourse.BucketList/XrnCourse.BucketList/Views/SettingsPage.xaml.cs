@@ -1,8 +1,11 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Mocking;
+using XrnCourse.BucketList.Domain.Services.Local;
+using XrnCourse.BucketList.Domain.Validators;
 
 namespace XrnCourse.BucketList.Views
 {
@@ -11,13 +14,15 @@ namespace XrnCourse.BucketList.Views
     {
         IAppSettingsService settingsService;
         IUsersService usersService;
+        IValidator userValidator;
 
         public SettingsPage()
         {
             InitializeComponent();
 
-            settingsService = new MockAppSettingsService();
-            usersService = new MockUsersService();
+            settingsService = new JsonAppSettingsService();
+            usersService = new JsonUsersService();
+            userValidator = new UserValidator();
         }
 
 
@@ -30,8 +35,8 @@ namespace XrnCourse.BucketList.Views
 
             //get current User and intialize controls
             var currentUser = await usersService.GetUser(settings.CurrentUserId);
-            txtUserName.Text = currentUser.UserName;
-            txtEmail.Text = currentUser.Email;
+            txtUserName.Text = currentUser?.UserName;
+            txtEmail.Text = currentUser?.Email;
 
             base.OnAppearing();
         }
@@ -43,15 +48,45 @@ namespace XrnCourse.BucketList.Views
             currentSettings.EnableNotifications = swEnableNotifications.On;
             await settingsService.SaveSettings(currentSettings);
 
+            var user = await usersService.GetUser(currentSettings.CurrentUserId) ?? new User();
+
             //save user info settings
-            var user = await usersService.GetUser(currentSettings.CurrentUserId);
             user.UserName = txtUserName.Text.Trim();
             user.Email = txtEmail.Text.Trim();
-            await usersService.UpdateUser(user);
 
-            //close settings page
-            await Navigation.PopAsync();
+            if (Validate(user))
+            {
+                await usersService.UpdateUser(user);
+
+                //close settings page
+                await Navigation.PopAsync();
+            }
         }
 
+        /// <summary>
+        /// Validates the current values of a user object
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <returns></returns>
+        private bool Validate(User user)
+        {
+            errorEmail.Text = "";
+            errorUserName.Text = "";
+
+            var validationResult = userValidator.Validate(user);
+            //loop through error to identify properties
+            foreach (var error in validationResult.Errors)
+            {
+                if (error.PropertyName == nameof(user.UserName))
+                {
+                    errorUserName.Text = error.ErrorMessage;
+                }
+                if (error.PropertyName == nameof(user.Email))
+                {
+                    errorEmail.Text = error.ErrorMessage;
+                }
+            }
+            return validationResult.IsValid;
+        }
     }
 }

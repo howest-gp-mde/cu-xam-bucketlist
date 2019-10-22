@@ -4,7 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Mocking;
+using XrnCourse.BucketList.Domain.Services.Local;
 using XrnCourse.BucketList.Domain.Validators;
 
 namespace XrnCourse.BucketList.Views
@@ -23,8 +23,8 @@ namespace XrnCourse.BucketList.Views
         {
             InitializeComponent();
 
-            settingsService = new MockAppSettingsService();
-            bucketsService = new MockBucketsService();
+            settingsService = new JsonAppSettingsService();
+            bucketsService = new JsonBucketsService();
 
             bucketValidator = new BucketValidator();
 
