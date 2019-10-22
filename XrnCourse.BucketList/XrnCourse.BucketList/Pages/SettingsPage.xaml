@@ -8,22 +8,24 @@
              x:Class="XrnCourse.BucketList.Pages.SettingsPage"
              Title="Settings">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" IconImageSource="{OnPlatform UWP=ok.png}" Clicked="BtnSaveSettings_Clicked"></ToolbarItem>
+        <ToolbarItem Text="Save" 
+                     IconImageSource="{OnPlatform UWP=ok.png}" 
+                     Command="{Binding SaveSettingsCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <TableView>
-        <TableRoot>
-            <TableSection Title="User settings">
-                <EntryCell x:Name="txtUserName" Label="Username" Keyboard="Text" />
-                <TextCell x:Name="errorUserName" TextColor="#f46842" />
-                <EntryCell x:Name="txtEmail" Label="E-mail" Keyboard="Email" />
-                <TextCell x:Name="errorEmail" TextColor="#f46842"  />
-            </TableSection>
-            <TableSection Title="General settings">
-                <SwitchCell x:Name="swEnableListSharing" Text="Enable List sharing" On="true" />
-                <SwitchCell x:Name="swEnableNotifications" Text="Enable notifications" On="true" />
-            </TableSection>
-        </TableRoot>
+            <TableRoot>
+                <TableSection Title="User settings">
+                    <EntryCell Text="{Binding UserName}" Label="Username" Keyboard="Text" />
+                    <TextCell Text="{Binding ErrorUserName}" TextColor="#f46842" />
+                    <EntryCell Text="{Binding Email}" Label="E-mail" Keyboard="Email" />
+                    <TextCell Text="{Binding ErrorEmail}" TextColor="#f46842" />
+                </TableSection>
+                <TableSection Title="General settings">
+                    <SwitchCell On="{Binding EnableListSharing}" Text="Enable List sharing" />
+                    <SwitchCell On="{Binding EnableNotifications}" Text="Enable notifications" />
+                </TableSection>
+            </TableRoot>
         </TableView>
     </ContentPage.Content>
 </ContentPage>
