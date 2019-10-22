@@ -4,13 +4,14 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Mocking;
+using XrnCourse.BucketList.Domain.Services.Local;
 
 namespace XrnCourse.BucketList.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
+        private readonly IUsersService usersService;
         private readonly IAppSettingsService settingsService;
         private readonly IBucketsService bucketsService;
 
@@ -18,14 +19,42 @@ namespace XrnCourse.BucketList.Views
         {
             InitializeComponent();
 
-            settingsService = new MockAppSettingsService();
-            bucketsService = new MockBucketsService();
+            usersService = new JsonUsersService();
+            settingsService = new JsonAppSettingsService();
+            bucketsService = new JsonBucketsService();
         }
 
         protected async override void OnAppearing()
         {
+            await EnsureUserAndSettings();
+
             await RefreshBucketLists();
             base.OnAppearing();
+        }
+
+        protected async Task EnsureUserAndSettings()
+        {
+            var settings = await settingsService.GetSettings();
+            if (settings == null)
+            {
+                //create new user
+                var newUser = new User
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = "Guest",
+                    Email = ""
+                };
+                await usersService.CreateUser(newUser);
+
+                //create new settings
+                var newSettings = new AppSettings
+                {
+                    CurrentUserId = newUser.Id,
+                    EnableListSharing = false,
+                    EnableNotifications = false,
+                };
+                await settingsService.SaveSettings(newSettings);
+            }
         }
 
         private async void BtnSettings_Clicked(object sender, EventArgs e)

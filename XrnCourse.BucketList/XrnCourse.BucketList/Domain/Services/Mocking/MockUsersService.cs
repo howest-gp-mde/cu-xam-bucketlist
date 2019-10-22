@@ -34,5 +34,12 @@ namespace XrnCourse.BucketList.Domain.Services.Mocking
             users.Add(user);
             return await Task.FromResult(oldUser); //ensures async result
         }
+
+        public async Task<User> CreateUser(User user)
+        {
+            //this mock service just adds this user to the (in-memory) collection
+            users.Add(user);
+            return await GetUser(user.Id);
+        }
     }
 }
