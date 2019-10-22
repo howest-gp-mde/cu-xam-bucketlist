@@ -1,12 +1,12 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace XrnCourse.BucketList.Views
+namespace XrnCourse.BucketList.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class BusyView : ContentView
+    public partial class AddItemPage : ContentPage
     {
-        public BusyView()
+        public AddItemPage()
         {
             InitializeComponent();
         }
