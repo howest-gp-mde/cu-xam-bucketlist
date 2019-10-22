@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Mocking;
+using XrnCourse.BucketList.Domain.Services.Local;
 
 namespace XrnCourse.BucketList.ViewModels
 {
@@ -18,9 +18,9 @@ namespace XrnCourse.BucketList.ViewModels
 
         public MainViewModel()
         {
-            usersService = new MockUsersService();
-            settingsService = new MockAppSettingsService();
-            bucketsService = new MockBucketsService();
+            usersService = new JsonUsersService();
+            settingsService = new JsonAppSettingsService();
+            bucketsService = new JsonBucketsService();
         }
 
         private bool isBusy;
