@@ -1,6 +1,7 @@
 ﻿using FreshMvvm;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -82,7 +83,7 @@ namespace XrnCourse.BucketList.ViewModels
             var buckets = await bucketsService.GetBucketListsForUser(settings.CurrentUserId);
             //bind IEnumerable<Bucket> to the ListView's ItemSource
             Buckets = null;    //Important! ensure the list is empty first to force refresh!
-            Buckets = new ObservableCollection<Bucket>(buckets);
+            Buckets = new ObservableCollection<Bucket>(buckets.OrderBy(e => e.Title));
             IsBusy = false;
         }
 
