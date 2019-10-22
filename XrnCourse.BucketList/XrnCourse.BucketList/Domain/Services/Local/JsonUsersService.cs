@@ -12,10 +12,17 @@ namespace XrnCourse.BucketList.Domain.Services.Local
     public class JsonUsersService : IUsersService
     {
         private readonly string _filePath;
+        private readonly JsonSerializerSettings _serializerSettings;
 
         public JsonUsersService()
         {
             _filePath = Path.Combine(FileSystem.AppDataDirectory, "users.json");
+
+            //prevent self-referencing loops when saving Json
+            _serializerSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
         }
 
         public async Task<User> GetUser(Guid id)
@@ -58,7 +65,7 @@ namespace XrnCourse.BucketList.Domain.Services.Local
 
         protected void SaveUsersToJsonFile(IEnumerable<User> users)
         {
-            string usersJson = JsonConvert.SerializeObject(users);
+            string usersJson = JsonConvert.SerializeObject(users, Formatting.Indented, _serializerSettings);
             File.WriteAllText(_filePath, usersJson);
         }
     }

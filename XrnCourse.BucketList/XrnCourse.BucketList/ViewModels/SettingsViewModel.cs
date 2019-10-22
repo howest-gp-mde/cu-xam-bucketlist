@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Mocking;
+using XrnCourse.BucketList.Domain.Services.Local;
 using XrnCourse.BucketList.Domain.Validators;
 
 namespace XrnCourse.BucketList.ViewModels
@@ -17,8 +17,8 @@ namespace XrnCourse.BucketList.ViewModels
 
         public SettingsViewModel()
         {
-            settingsService = new MockAppSettingsService();
-            usersService = new MockUsersService();
+            settingsService = new JsonAppSettingsService();
+            usersService = new JsonUsersService();
             userValidator = new UserValidator();
         }
 
