@@ -4,11 +4,16 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:XrnCourse.BucketList.Pages"
+             xmlns:bhv="clr-namespace:XrnCourse.BucketList.Behaviors" 
              mc:Ignorable="d"
              Style="{StaticResource MainLayout}"
+             Title="{Binding PageTitle}"
+             x:Name="page"
              x:Class="XrnCourse.BucketList.Pages.BucketPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" IconImageSource="{OnPlatform UWP=ok.png}" Clicked="BtnSave_Clicked"></ToolbarItem>
+        <ToolbarItem Text="Save" 
+                     IconImageSource="{OnPlatform UWP=ok.png}" 
+                     Command="{Binding SaveBucketCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <AbsoluteLayout>
@@ -16,26 +21,60 @@
                         AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <StackLayout>
                     <Label Text="Title" />
-                    <Entry x:Name="txtTitle" Placeholder="Enter a title" />
-                    <Label x:Name="lblErrorTitle" StyleClass="errormessage" />
+                    <Entry Text="{Binding BucketTitle}" Placeholder="Enter a title" />
+                    <Label Text="{Binding BucketTitleError}"
+                           IsVisible="{Binding BucketTitleErrorVisible}" 
+                           StyleClass="errormessage" />
                     <Label Text="Description" />
-                    <Entry x:Name="txtDescription" Placeholder="Describe your list here" />
-                    <Label x:Name="lblErrorDescription" StyleClass="errormessage" />
+                    <Entry Text="{Binding BucketDescription}" Placeholder="Describe your list here" />
+                    <Label Text="{Binding BucketDescriptionError}"
+                           IsVisible="{Binding BucketDescriptionErrorVisible}" 
+                           StyleClass="errormessage" />
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Is favorite?" 
-                    VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
-                        <Switch x:Name="swIsFavorite" 
-                    VerticalOptions="Center" HorizontalOptions="End" />
+                               VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                        <Switch IsToggled="{Binding BucketIsFavorite}"
+                                VerticalOptions="Center" HorizontalOptions="End" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Percent complete" 
-                    VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
-                        <Label x:Name="lblPercentComplete" 
-                    VerticalOptions="Center" HorizontalOptions="End" />
+                               VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                        <Label Text="{Binding BucketPercentComplete}" 
+                               VerticalOptions="Center" HorizontalOptions="End" />
                     </StackLayout>
+                    <Button Text="Add new item" 
+                            Command="{Binding OpenItemPageCommand}" 
+                            HorizontalOptions="End" Margin="0,20,0,0" />
+                    <ListView ItemsSource="{Binding BucketItems}"
+                              HasUnevenRows="False" RowHeight="60">
+                        <ListView.Behaviors>
+                            <bhv:EventToCommandBehavior 
+                                EventName="ItemTapped"  
+                                Command="{Binding OpenItemPageCommand}"
+                                EventArgsConverter="{StaticResource ItemTappedEventArgsConv}" />
+                        </ListView.Behaviors>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Command="{Binding BindingContext.OpenItemPageCommand, Source={x:Reference page}}" 
+                                                  CommandParameter="{Binding .}" 
+                                                  Text="Edit" />
+                                        <MenuItem Command="{Binding BindingContext.DeleteItemCommand, Source={x:Reference page}}"
+                                                  CommandParameter="{Binding .}"
+                                                  Text="Delete" IsDestructive="True" />
+                                    </ViewCell.ContextActions>
+                                    <StackLayout>
+                                        <Label Text="{Binding ItemDescription}" 
+                                               VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackLayout>
             </ScrollView>
-            <views:BusyView x:Name="busyIndicator" />
+            <views:BusyView IsVisible="{Binding IsBusy}" />
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

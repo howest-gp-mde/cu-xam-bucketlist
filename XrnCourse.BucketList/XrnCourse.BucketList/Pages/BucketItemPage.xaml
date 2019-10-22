@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:XrnCourse.BucketList.Pages"
+             mc:Ignorable="d"
+             Style="{StaticResource MainLayout}"
+             Title="{Binding PageTitle}"
+             x:Class="XrnCourse.BucketList.Pages.BucketItemPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save Item" 
+                     IconImageSource="{OnPlatform UWP=ok.png}" 
+                     Command="{Binding SaveBucketItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ScrollView AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <StackLayout>
+                    <Label Text="Item Description" />
+                    <Entry Text="{Binding ItemDescription}" Placeholder="Describe the item here" />
+                    <Label Text="{Binding ItemDescriptionError}" 
+                           IsVisible="{Binding ItemDescriptionErrorVisible}" 
+                           StyleClass="errormessage" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Completed" 
+                               VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                        <Switch IsToggled="{Binding ItemIsComplete}"
+                                VerticalOptions="Center" HorizontalOptions="End" />
+                    </StackLayout>
+                    <DatePicker IsVisible="{Binding ItemIsComplete}" Date="{Binding ItemCompletionDate}" />
+                </StackLayout>
+            </ScrollView>
+            <views:BusyView IsVisible="{Binding IsBusy}" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
