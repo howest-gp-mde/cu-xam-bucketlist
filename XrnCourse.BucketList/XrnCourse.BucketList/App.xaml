@@ -12,6 +12,8 @@
         <ResourceDictionary>
             <!-- Converters -->
             <conv:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConv" />
+            <conv:BucketCompletionToIconConverter x:Key="BucketCompletionToIconConv" />
+            <conv:ItemCompletionToIconConverter x:Key="ItemCompletionToIconConv" />
             
             <!-- Common Colors -->
             <Color x:Key="ColorPrimary">#2196F3</Color>

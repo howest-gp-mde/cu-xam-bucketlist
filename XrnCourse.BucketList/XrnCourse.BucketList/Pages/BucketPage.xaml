@@ -64,9 +64,11 @@
                                                   CommandParameter="{Binding .}"
                                                   Text="Delete" IsDestructive="True" />
                                     </ViewCell.ContextActions>
-                                    <StackLayout>
+                                    <StackLayout StyleClass="listitem">
+                                        <Image Source="{Binding Path=CompletionDate, Converter={StaticResource ItemCompletionToIconConv}}" 
+                                               VerticalOptions="CenterAndExpand" />
                                         <Label Text="{Binding ItemDescription}" 
-                                               VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" />
+                                               VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
