@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Mocking;
+using XrnCourse.BucketList.Domain.Services.Local;
 using XrnCourse.BucketList.Domain.Validators;
 
 namespace XrnCourse.BucketList.ViewModels
@@ -19,7 +19,7 @@ namespace XrnCourse.BucketList.ViewModels
 
         public BucketItemViewModel()
         {
-            this.bucketService = new MockBucketsService();
+            this.bucketService = new JsonBucketsService();
             bucketitemValidator = new BucketItemValidator();
         }
 

@@ -12,10 +12,17 @@ namespace XrnCourse.BucketList.Domain.Services.Local
     public class JsonBucketsService : IBucketsService
     {
         private readonly string _filePath;
+        private readonly JsonSerializerSettings _serializerSettings;
 
         public JsonBucketsService()
         {
             _filePath = Path.Combine(FileSystem.AppDataDirectory, "bucketlists.json");
+            
+            //prevent self-referencing loops when saving Json (Bucket -> BucketItem -> Bucket -> ...)
+            _serializerSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
         }
 
         public async Task<Bucket> AddBucketList(Bucket bucket)
@@ -69,7 +76,7 @@ namespace XrnCourse.BucketList.Domain.Services.Local
 
         protected void SaveBucketsToJsonFile(IEnumerable<Bucket> buckets)
         {
-            string bucketsJson = JsonConvert.SerializeObject(buckets);
+            string bucketsJson = JsonConvert.SerializeObject(buckets, Formatting.Indented, _serializerSettings);
             File.WriteAllText(_filePath, bucketsJson);
         }
     }
