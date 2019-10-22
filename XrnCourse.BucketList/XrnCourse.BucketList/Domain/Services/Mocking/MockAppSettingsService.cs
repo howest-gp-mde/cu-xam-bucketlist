@@ -26,5 +26,11 @@ namespace XrnCourse.BucketList.Domain.Services.Mocking
             currentSettings = settings;
             return await Task.FromResult(true); //ensures async result
         }
+
+        public async Task<bool> HasSettings()
+        {
+            //no action needed here, this mock service always has settings (in memory)
+            return await Task.FromResult(true); //ensures async result
+        }
     }
 }
