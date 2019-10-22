@@ -15,6 +15,14 @@
             /// </summary>
             public const int FakeDelay = 1000;
         }
+
+        public static class MessageNames
+        {
+            /// <summary>
+            /// MessagingCenter key to notify a bucket has been saved
+            /// </summary>
+            public const string BucketSaved = "BUCKETSAVED";
+        }
     }
 
 }
