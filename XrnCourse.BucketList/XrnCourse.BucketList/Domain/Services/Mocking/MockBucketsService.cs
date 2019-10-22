@@ -22,14 +22,14 @@ namespace XrnCourse.BucketList.Domain.Services.Mocking
                 Items = new List<BucketItem> {
                     new BucketItem {
                         Id = Guid.Parse("11111111-1111-0000-0000-000000000001"),
-                        ItemDescription ="Make a world trip", Order = 1 },
+                        ItemDescription ="Make a world trip"},
                     new BucketItem {
                         Id = Guid.Parse("11111111-2222-0000-0000-000000000002"),
-                        ItemDescription="Learn Xamarin", Order = 2,
+                        ItemDescription="Learn Xamarin",
                         CompletionDate = DateTime.Now },
                     new BucketItem {
                         Id = Guid.Parse("11111111-3333-0000-0000-000000000003"),
-                        ItemDescription="Publish my first mobile app", Order = 3
+                        ItemDescription="Publish my first mobile app"
                     }
                 }
             }

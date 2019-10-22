@@ -3,6 +3,7 @@ using FreshMvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -262,7 +263,7 @@ namespace XrnCourse.BucketList.ViewModels
             BucketDescription = currentBucket.Description;
             BucketIsFavorite = currentBucket.IsFavorite;
             BucketPercentComplete = currentBucket.PercentCompleted.ToString("P0");
-            BucketItems = new ObservableCollection<BucketItem>(currentBucket.Items);
+            BucketItems = new ObservableCollection<BucketItem>(currentBucket.Items.OrderBy(e => e.ItemDescription));
         }
 
         /// <summary>
