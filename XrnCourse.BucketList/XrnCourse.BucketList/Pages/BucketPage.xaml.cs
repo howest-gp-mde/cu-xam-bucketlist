@@ -7,7 +7,7 @@ using XrnCourse.BucketList.Domain.Services;
 using XrnCourse.BucketList.Domain.Services.Local;
 using XrnCourse.BucketList.Domain.Validators;
 
-namespace XrnCourse.BucketList.Views
+namespace XrnCourse.BucketList.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BucketPage : ContentPage
