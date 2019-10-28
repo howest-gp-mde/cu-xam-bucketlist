@@ -36,7 +36,7 @@ namespace XrnCourse.BucketList.Domain.Services.Local
             var users = await GetAllUsers();
             var userToUpdate = users.FirstOrDefault(e => e.Id == user.Id);
             users.Remove(userToUpdate);
-            users.Add(userToUpdate);
+            users.Add(user);
             SaveUsersToJsonFile(users);
             return users.FirstOrDefault(e => e.Id == user.Id);
         }
