@@ -4,21 +4,24 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Local;
 using XrnCourse.BucketList.Domain.Validators;
 
 namespace XrnCourse.BucketList.ViewModels
 {
     public class SettingsViewModel : FreshBasePageModel
     {
-        IAppSettingsService settingsService;
-        IUsersService usersService;
-        IValidator userValidator;
+        private readonly IAppSettingsService settingsService;
+        private readonly IUsersService usersService;
 
-        public SettingsViewModel()
+        private IValidator userValidator;
+
+        public SettingsViewModel(
+            IAppSettingsService settingsService,
+            IUsersService usersService)
         {
-            settingsService = new JsonAppSettingsService();
-            usersService = new JsonUsersService();
+            this.settingsService = settingsService;
+            this.usersService = usersService;
+
             userValidator = new UserValidator();
         }
 

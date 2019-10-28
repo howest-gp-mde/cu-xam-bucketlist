@@ -9,7 +9,6 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Local;
 using XrnCourse.BucketList.Domain.Validators;
 
 namespace XrnCourse.BucketList.ViewModels
@@ -24,10 +23,13 @@ namespace XrnCourse.BucketList.ViewModels
         private Bucket currentBucket;
         private bool isNew = true;
 
-        public BucketViewModel()
+        public BucketViewModel(
+            IBucketsService bucketsService,
+            IAppSettingsService settingsService)
         {
-            settingsService = new JsonAppSettingsService();
-            bucketsService = new JsonBucketsService();
+            this.bucketsService = bucketsService;
+            this.settingsService = settingsService;
+
             bucketValidator = new BucketValidator();
         }
 
