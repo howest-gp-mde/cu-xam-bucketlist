@@ -42,7 +42,10 @@ namespace XrnCourse.BucketList.ViewModels
         public string ErrorUserName
         {
             get { return errorUserName; }
-            set { errorUserName = value; }
+            set { 
+                errorUserName = value;
+                RaisePropertyChanged(nameof(ErrorUserName));
+            }
         }
 
         private string email;
@@ -59,8 +62,11 @@ namespace XrnCourse.BucketList.ViewModels
         private string errorEmail;
         public string ErrorEmail
         {
-            get { return errorUserName; }
-            set { errorUserName = value; }
+            get { return errorEmail; }
+            set {
+                errorEmail = value;
+                RaisePropertyChanged(nameof(ErrorEmail));
+            }
         }
 
         private bool enableListSharing;
