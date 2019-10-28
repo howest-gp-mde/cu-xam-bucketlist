@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using XrnCourse.BucketList.Domain.Models;
 using XrnCourse.BucketList.Domain.Services;
-using XrnCourse.BucketList.Domain.Services.Local;
 
 namespace XrnCourse.BucketList.ViewModels
 {
@@ -17,11 +16,14 @@ namespace XrnCourse.BucketList.ViewModels
         private readonly IAppSettingsService settingsService;
         private readonly IBucketsService bucketsService;
 
-        public MainViewModel()
+        public MainViewModel(
+            IUsersService usersService, 
+            IAppSettingsService settingsService, 
+            IBucketsService bucketsService)
         {
-            usersService = new JsonUsersService();
-            settingsService = new JsonAppSettingsService();
-            bucketsService = new JsonBucketsService();
+            this.usersService = usersService;
+            this.settingsService = settingsService;
+            this.bucketsService = bucketsService;
         }
 
         private bool isBusy;
