@@ -81,12 +81,23 @@ namespace XrnCourse.BucketList.ViewModels
             IsBusy = true;
             //get settings, because we need current user Id
             var settings = await settingsService.GetSettings();
-            //get all bucket lists for this user
-            var buckets = await bucketsService.GetBucketListsForUser(settings.CurrentUserId);
-            //bind IEnumerable<Bucket> to the ListView's ItemSource
-            Buckets = null;    //Important! ensure the list is empty first to force refresh!
-            Buckets = new ObservableCollection<Bucket>(buckets.OrderBy(e => e.Title));
-            IsBusy = false;
+
+            try
+            {
+                //get all bucket lists for this user
+                var buckets = await bucketsService.GetBucketListsForUser(settings.CurrentUserId);
+                //bind IEnumerable<Bucket> to the ListView's ItemSource
+                Buckets = null;    //Important! ensure the list is empty first to force refresh!
+                Buckets = new ObservableCollection<Bucket>(buckets.OrderBy(e => e.Title));
+            }
+            catch(Exception ex)
+            {
+                await CoreMethods.DisplayAlert("Error", $"{ex.Message}\n\nIs your Web API online?", "Ok");
+            }
+            finally
+            {
+                IsBusy = false;
+            }            
         }
 
         private async Task EnsureUserAndSettings()
@@ -98,7 +109,7 @@ namespace XrnCourse.BucketList.ViewModels
                 //create new user
                 var newUser = new User
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),
                     UserName = "Guest",
                     Email = ""
                 };

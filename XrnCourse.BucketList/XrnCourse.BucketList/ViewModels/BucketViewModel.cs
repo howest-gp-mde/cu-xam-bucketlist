@@ -205,26 +205,37 @@ namespace XrnCourse.BucketList.ViewModels
 
         public ICommand SaveBucketCommand => new Command(
             async () => {
-                SaveBucketState();
-
-                if (Validate(currentBucket))
+                try
                 {
-                    IsBusy = true;
+                    SaveBucketState();
 
-                    if (isNew)
+                    if (Validate(currentBucket))
                     {
-                        await bucketsService.AddBucketList(currentBucket);
+                        IsBusy = true;
+
+                        if (isNew)
+                        {
+                            await bucketsService.AddBucketList(currentBucket);
+                        }
+                        else
+                        {
+                            await bucketsService.UpdateBucketList(currentBucket);
+                        }
+                        IsBusy = false;
+
+                        MessagingCenter.Send(this,
+                            Constants.MessageNames.BucketSaved, currentBucket);
+
+                        await CoreMethods.PopPageModel(false, true);
                     }
-                    else
-                    {
-                        await bucketsService.UpdateBucketList(currentBucket);
-                    }
+                }
+                catch(Exception ex)
+                {
+                    await CoreMethods.DisplayAlert("Error", ex.Message, "Ok");
+                }
+                finally
+                {
                     IsBusy = false;
-
-                    MessagingCenter.Send(this,
-                        Constants.MessageNames.BucketSaved, currentBucket);
-
-                    await CoreMethods.PopPageModel(false, true);
                 }
             }
         );
