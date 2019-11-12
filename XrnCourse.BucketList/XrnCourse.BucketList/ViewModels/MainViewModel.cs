@@ -92,7 +92,7 @@ namespace XrnCourse.BucketList.ViewModels
             }
             catch(Exception ex)
             {
-                await CoreMethods.DisplayAlert("Error", $"{ex.Message}\n\nIs your Web API online?", "Ok");
+                await CoreMethods.DisplayAlert("Error", $"{ex.Message}", "Ok");
             }
             finally
             {
