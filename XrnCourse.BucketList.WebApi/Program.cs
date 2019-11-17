@@ -20,7 +20,9 @@ namespace XrnCourse.BucketList.WebApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5001") //expose server on ALL ips.
+                        .UseStartup<Startup>();
                 });
     }
 }

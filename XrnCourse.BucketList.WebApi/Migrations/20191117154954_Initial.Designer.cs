@@ -10,8 +10,8 @@ using XrnCourse.BucketList.WebApi.Data;
 namespace XrnCourse.BucketList.WebApi.Migrations
 {
     [DbContext(typeof(BucketlistContext))]
-    [Migration("20191104121211_InitialData")]
-    partial class InitialData
+    [Migration("20191117154954_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,6 +76,9 @@ namespace XrnCourse.BucketList.WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BucketId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("CompletionDate")
                         .HasColumnType("datetime2");
 
@@ -84,12 +87,9 @@ namespace XrnCourse.BucketList.WebApi.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<Guid>("ParentBucketId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentBucketId");
+                    b.HasIndex("BucketId");
 
                     b.ToTable("BucketlistItems");
 
@@ -97,28 +97,28 @@ namespace XrnCourse.BucketList.WebApi.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-0000-0000-000000000001"),
-                            CompletionDate = new DateTime(2019, 5, 4, 13, 12, 11, 112, DateTimeKind.Local).AddTicks(4216),
-                            ItemDescription = "Become better in C#",
-                            ParentBucketId = new Guid("11111111-0000-0000-0000-000000000001")
+                            BucketId = new Guid("11111111-0000-0000-0000-000000000001"),
+                            CompletionDate = new DateTime(2019, 5, 17, 16, 49, 53, 777, DateTimeKind.Local).AddTicks(8522),
+                            ItemDescription = "Become better in C#"
                         },
                         new
                         {
                             Id = new Guid("11111111-1111-0000-0000-000000000002"),
-                            CompletionDate = new DateTime(2019, 10, 4, 13, 12, 11, 115, DateTimeKind.Local).AddTicks(668),
-                            ItemDescription = "Learn Xamarin",
-                            ParentBucketId = new Guid("11111111-0000-0000-0000-000000000001")
+                            BucketId = new Guid("11111111-0000-0000-0000-000000000001"),
+                            CompletionDate = new DateTime(2019, 10, 17, 16, 49, 53, 780, DateTimeKind.Local).AddTicks(6502),
+                            ItemDescription = "Learn Xamarin"
                         },
                         new
                         {
                             Id = new Guid("11111111-1111-0000-0000-000000000003"),
-                            ItemDescription = "Publish my first mobile app",
-                            ParentBucketId = new Guid("11111111-0000-0000-0000-000000000001")
+                            BucketId = new Guid("11111111-0000-0000-0000-000000000001"),
+                            ItemDescription = "Publish my first mobile app"
                         },
                         new
                         {
                             Id = new Guid("22222222-1111-0000-0000-000000000001"),
-                            ItemDescription = "Hiking New Zealand",
-                            ParentBucketId = new Guid("11111111-0000-0000-0000-000000000002")
+                            BucketId = new Guid("11111111-0000-0000-0000-000000000002"),
+                            ItemDescription = "Hiking New Zealand"
                         });
                 });
 
@@ -168,7 +168,7 @@ namespace XrnCourse.BucketList.WebApi.Migrations
                 {
                     b.HasOne("XrnCourse.BucketList.WebApi.Domain.Bucketlist", "ParentBucket")
                         .WithMany("Items")
-                        .HasForeignKey("ParentBucketId")
+                        .HasForeignKey("BucketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

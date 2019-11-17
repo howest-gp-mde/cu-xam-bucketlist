@@ -96,14 +96,14 @@ namespace XrnCourse.BucketList.WebApi.Migrations
                         {
                             Id = new Guid("11111111-1111-0000-0000-000000000001"),
                             BucketId = new Guid("11111111-0000-0000-0000-000000000001"),
-                            CompletionDate = new DateTime(2019, 5, 4, 17, 27, 28, 576, DateTimeKind.Local).AddTicks(8584),
+                            CompletionDate = new DateTime(2019, 5, 17, 16, 49, 53, 777, DateTimeKind.Local).AddTicks(8522),
                             ItemDescription = "Become better in C#"
                         },
                         new
                         {
                             Id = new Guid("11111111-1111-0000-0000-000000000002"),
                             BucketId = new Guid("11111111-0000-0000-0000-000000000001"),
-                            CompletionDate = new DateTime(2019, 10, 4, 17, 27, 28, 579, DateTimeKind.Local).AddTicks(6975),
+                            CompletionDate = new DateTime(2019, 10, 17, 16, 49, 53, 780, DateTimeKind.Local).AddTicks(6502),
                             ItemDescription = "Learn Xamarin"
                         },
                         new

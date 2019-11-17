@@ -1,4 +1,5 @@
 ﻿using FreshMvvm;
+using System.Net;
 using Xamarin.Forms;
 using XrnCourse.BucketList.Domain.Services;
 using XrnCourse.BucketList.Domain.Services.Api;
@@ -12,6 +13,11 @@ namespace XrnCourse.BucketList
         public App()
         {
             InitializeComponent();
+
+            ServicePointManager.ServerCertificateValidationCallback +=
+                (sender, cert, chain, sslPolicyErrors) => 
+                true;
+
 
             //register dependencies
             FreshIOC.Container.Register<IAppSettingsService>(new JsonAppSettingsService());
