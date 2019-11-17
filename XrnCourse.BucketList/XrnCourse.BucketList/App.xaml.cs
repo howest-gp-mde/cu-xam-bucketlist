@@ -1,6 +1,8 @@
 ﻿using FreshMvvm;
+using System.Net;
 using Xamarin.Forms;
 using XrnCourse.BucketList.Domain.Services;
+using XrnCourse.BucketList.Domain.Services.Api;
 using XrnCourse.BucketList.Domain.Services.Local;
 using XrnCourse.BucketList.ViewModels;
 
@@ -12,10 +14,15 @@ namespace XrnCourse.BucketList
         {
             InitializeComponent();
 
+            ServicePointManager.ServerCertificateValidationCallback +=
+                (sender, cert, chain, sslPolicyErrors) => 
+                true;
+
+
             //register dependencies
             FreshIOC.Container.Register<IAppSettingsService>(new JsonAppSettingsService());
             FreshIOC.Container.Register<IUsersService>(new JsonUsersService());
-            FreshIOC.Container.Register<IBucketsService>(new JsonBucketsService());
+            FreshIOC.Container.Register<IBucketsService>(new ApiBucketsService());
 
             MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
         }
