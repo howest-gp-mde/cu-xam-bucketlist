@@ -7,6 +7,17 @@ namespace XrnCourse.BucketList.Domain.Services.Api
 {
     public class WebApiClient
     {
+        private static HttpClientHandler ClientHandler()
+        {
+            var httpClientHandler = new HttpClientHandler();
+#if DEBUG
+            //allow connecting to untrusted certificates when running a DEBUG assembly
+            httpClientHandler.ServerCertificateCustomValidationCallback =
+                (message, cert, chain, errors) => { return true; };
+#endif
+            return httpClientHandler;
+        }
+
         private static JsonMediaTypeFormatter GetJsonFormatter() {
             var formatter = new JsonMediaTypeFormatter();
             //prevent self-referencing loops when saving Json (Bucket -> BucketItem -> Bucket -> ...)
@@ -16,7 +27,7 @@ namespace XrnCourse.BucketList.Domain.Services.Api
 
         public async static Task<T> GetApiResult<T>(string uri)
         {
-            using (HttpClient httpClient = new HttpClient())
+            using (HttpClient httpClient = new HttpClient(ClientHandler()))
             {
                 string response = await httpClient.GetStringAsync(uri);
                 return JsonConvert.DeserializeObject<T>(response, GetJsonFormatter().SerializerSettings);
@@ -42,7 +53,7 @@ namespace XrnCourse.BucketList.Domain.Services.Api
         {
             TOut result = default;
 
-            using (HttpClient httpClient = new HttpClient())
+            using (HttpClient httpClient = new HttpClient(ClientHandler()))
             {
                 HttpResponseMessage response;
                 if (httpMethod == HttpMethod.Post)
