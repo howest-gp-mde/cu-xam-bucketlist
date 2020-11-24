@@ -15,7 +15,7 @@ namespace XrnCourse.BucketList.Domain.Services.Api
 
         public ApiBucketsService()
         {
-            _baseUri = "http://enter-your-lan-ip-here:5000/";
+            _baseUri = "https://enter-your-lan-ip-here:5001/";
         }
 
         public async Task<Bucket> AddBucketList(Bucket bucket)
