@@ -300,7 +300,9 @@ namespace XrnCourse.BucketList.ViewModels
             BucketTitleError = "";
             BucketDescriptionError = "";
 
-            var validationResult = bucketValidator.Validate(bucket);
+
+            var validationContext = new ValidationContext<Bucket>(bucket);
+            var validationResult = bucketValidator.Validate(validationContext);
             //loop through error to identify properties
             foreach (var error in validationResult.Errors)
             {

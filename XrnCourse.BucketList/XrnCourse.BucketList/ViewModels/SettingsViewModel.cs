@@ -145,7 +145,8 @@ namespace XrnCourse.BucketList.ViewModels
             ErrorUserName = "";
             ErrorEmail = "";
 
-            var validationResult = userValidator.Validate(user);
+            var validationContext = new ValidationContext<User>(user);
+            var validationResult = userValidator.Validate(validationContext);
             //loop through error to identify properties
             foreach (var error in validationResult.Errors)
             {

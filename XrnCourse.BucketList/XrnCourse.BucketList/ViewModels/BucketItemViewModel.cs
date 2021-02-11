@@ -159,7 +159,8 @@ namespace XrnCourse.BucketList.ViewModels
 
         private bool Validate(BucketItem item)
         {
-            var validationResult = bucketitemValidator.Validate(item);
+            var validationContext = new ValidationContext<BucketItem>(item);
+            var validationResult = bucketitemValidator.Validate(validationContext);
             //loop through error to identify properties
             foreach (var error in validationResult.Errors)
             {
