@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Bucket List</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.XrnCourse.BucketList</string>
+	<string>be.howest.XrnCourse.BucketList</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
