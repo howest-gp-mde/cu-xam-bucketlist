@@ -14,15 +14,11 @@ namespace XrnCourse.BucketList
         {
             InitializeComponent();
 
-            ServicePointManager.ServerCertificateValidationCallback +=
-                (sender, cert, chain, sslPolicyErrors) => 
-                true;
-
-
             //register dependencies
-            FreshIOC.Container.Register<IAppSettingsService>(new JsonAppSettingsService());
-            FreshIOC.Container.Register<IUsersService>(new JsonUsersService());
-            FreshIOC.Container.Register<IBucketsService>(new ApiBucketsService());
+            FreshIOC.Container.Register<IAppSettingsService, JsonAppSettingsService>().AsMultiInstance();
+            FreshIOC.Container.Register<IUsersService, JsonUsersService>().AsMultiInstance();
+            FreshIOC.Container.Register<IBucketsService, ApiBucketsService>().AsMultiInstance();
+            FreshIOC.Container.Register(new CustomHttpClient());
 
             MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
         }

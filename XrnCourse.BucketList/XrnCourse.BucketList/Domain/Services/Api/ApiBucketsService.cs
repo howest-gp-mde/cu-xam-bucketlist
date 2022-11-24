@@ -11,44 +11,44 @@ namespace XrnCourse.BucketList.Domain.Services.Api
 {
     public class ApiBucketsService : IBucketsService
     {
-        private readonly string _baseUri;
+        private readonly CustomHttpClient _httpClient;
 
-        public ApiBucketsService()
+        public ApiBucketsService(CustomHttpClient httpClient)
         {
-            _baseUri = "https://enter-your-lan-ip-here:5001/";
+            _httpClient = httpClient;
         }
 
         public async Task<Bucket> AddBucketList(Bucket bucket)
         {
             // add bucket 
-            var addedBucket = await WebApiClient
-                .PostCallApi<Bucket, Bucket>($"{_baseUri}bucketlists", bucket);
+            var addedBucket = await _httpClient
+                .PostCallApi<Bucket, Bucket>($"{Constants.ApiBaseUrl}bucketlists", bucket);
             return addedBucket;
         }
 
         public async Task<Bucket> DeleteBucketList(Guid id)
         {
-            return await WebApiClient
-                .DeleteCallApi<Bucket>($"{_baseUri}bucketlists/{id}");
+            return await _httpClient
+                .DeleteCallApi<Bucket>($"{Constants.ApiBaseUrl}bucketlists/{id}");
         }
 
         public async Task<Bucket> GetBucketList(Guid id)
         {
-            return await WebApiClient
-                .GetApiResult<Bucket>($"{_baseUri}bucketlists/{id}");
+            return await _httpClient
+                .GetApiResult<Bucket>($"{Constants.ApiBaseUrl}bucketlists/{id}");
         }
 
         public async Task<IQueryable<Bucket>> GetBucketListsForUser(Guid userid)
         {
-            var bucketLists = await WebApiClient
-                .GetApiResult<IEnumerable<Bucket>>($"{_baseUri}users/{userid}/bucketlists");
+            var bucketLists = await _httpClient
+                .GetApiResult<IEnumerable<Bucket>>($"{Constants.ApiBaseUrl}users/{userid}/bucketlists");
             return bucketLists.AsQueryable();
         }
 
         public async Task<Bucket> UpdateBucketList(Bucket bucket)
         {
-            return await WebApiClient
-                .PutCallApi<Bucket, Bucket>($"{_baseUri}bucketlists/{bucket.Id}", bucket);
+            return await _httpClient
+                .PutCallApi<Bucket, Bucket>($"{Constants.ApiBaseUrl}bucketlists/{bucket.Id}", bucket);
         }
     }
 }
