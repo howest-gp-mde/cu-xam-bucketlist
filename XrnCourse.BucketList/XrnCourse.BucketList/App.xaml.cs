@@ -18,7 +18,7 @@ namespace XrnCourse.BucketList
             FreshIOC.Container.Register<IAppSettingsService, JsonAppSettingsService>().AsMultiInstance();
             FreshIOC.Container.Register<IUsersService, JsonUsersService>().AsMultiInstance();
             FreshIOC.Container.Register<IBucketsService, ApiBucketsService>().AsMultiInstance();
-            FreshIOC.Container.Register(new CustomHttpClient());
+            FreshIOC.Container.Register<IApiClient, CustomHttpClient>().AsSingleton();
 
             MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
         }

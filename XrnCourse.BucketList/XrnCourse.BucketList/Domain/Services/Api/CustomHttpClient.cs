@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace XrnCourse.BucketList.Domain.Services.Api
 {
-    public class CustomHttpClient : HttpClient
+    public class CustomHttpClient : HttpClient, IApiClient
     {
         public CustomHttpClient() : base(CreateClientHandler())
         {
