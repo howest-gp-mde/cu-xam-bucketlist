@@ -5,7 +5,7 @@
     /// </summary>
     public static class Constants
     {
-        public const string ApiBaseUrl = "https://enter-your-lan-ip:5001/";
+        public const string ApiBaseUrl = "https://enter-your-api-tunnel-url/";
 
         /// <summary>
         /// Classifies constant values used for Mocking purproses

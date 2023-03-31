@@ -7,7 +7,7 @@ namespace XrnCourse.BucketList.Domain.Services.Api
 {
     public class CustomHttpClient : HttpClient, IApiClient
     {
-        public CustomHttpClient() : base(CreateClientHandler())
+        public CustomHttpClient() : base()
         {
 
         }
@@ -18,17 +18,6 @@ namespace XrnCourse.BucketList.Domain.Services.Api
             //prevent self-referencing loops when saving Json (Bucket -> BucketItem -> Bucket -> ...)
             formatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             return formatter;
-        }
-
-        private static HttpClientHandler CreateClientHandler()
-        {
-            var httpClientHandler = new HttpClientHandler();
-#if DEBUG
-            //allow connecting to untrusted certificates when running a DEBUG assembly
-            httpClientHandler.ServerCertificateCustomValidationCallback =
-                (message, cert, chain, errors) => { return true; };
-#endif
-            return httpClientHandler;
         }
 
         public async Task<T> GetApiResult<T>(string uri)
